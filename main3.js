@@ -1,17 +1,30 @@
 let items=document.getElementById("items");
 let forms=document.getElementById("forms");
 forms.addEventListener("submit",onsignup);
+/*document.addEventListener("DOMContentLoaded", () => {
+    axios.get("https://crudcrud.com/api/e789f3697a18477da49427efcfdc636a/Appointment").then(res=>
+    showUserName(res))
+  });*/
 function onsignup(e){
     e.preventDefault();
     let name=e.target.username.value;
 let email=e.target.emailid.value;
 let obj={
-    username:name,useremail:email
+    name,email
 };
-localStorage.setItem(obj.useremail,JSON.stringify(obj));
+//localStorage.setItem(obj.useremail,JSON.stringify(obj));
+axios.post("https://crudcrud.com/api/e789f3697a18477da49427efcfdc636a/Appointment",obj).
+then(res=>console.log(res.data)).
+catch(err=>console.log(err));
+showUserName(obj)
+}
+function showUserName(obj)
+{
+    let inputName=document.querySelector("#name");
+let inputEmail=document.querySelector("#email");
   let li=document.createElement("li");
-    let textnode=document.createTextNode(name);
-    let textnode1=document.createTextNode(email);
+    let textnode=document.createTextNode(obj.name);
+    let textnode1=document.createTextNode(obj.email);
     let textnode2=document.createTextNode(" ");
     li.appendChild(textnode);
     li.appendChild(textnode2);
@@ -27,4 +40,20 @@ localStorage.setItem(obj.useremail,JSON.stringify(obj));
         items.removeChild(li);
         
         }
+        let btn1=document.createElement("button");
+    let btnText1=document.createTextNode("Edit");
+    btn1.className="btn btn-success float-right m-2"
+    btn1.appendChild(btnText1);
+    btn1.onclick=()=>{
+        inputName.value=obj.username;
+        inputEmail.value=obj.useremail;
+        localStorage.removeItem(obj.useremail);
+        items.removeChild(li);
+        
+}
+    li.appendChild(btn1);
+    li.appendChild(btn);
+    items.appendChild(li);
+    inputName.value= '';
+    inputEmail.value= '';
 }
