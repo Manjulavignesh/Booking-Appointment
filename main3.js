@@ -1,10 +1,15 @@
 let items=document.getElementById("items");
 let forms=document.getElementById("forms");
 forms.addEventListener("submit",onsignup);
-/*document.addEventListener("DOMContentLoaded", () => {
-    axios.get("https://crudcrud.com/api/e789f3697a18477da49427efcfdc636a/Appointment").then(res=>
-    showUserName(res))
-  });*/
+document.addEventListener("DOMContentLoaded", () => {
+    axios.get("https://crudcrud.com/api/e789f3697a18477da49427efcfdc636a/Appointment").then((res)=>
+    {
+        for(let i=0;i<res.data.length;i++)
+        {
+    showUserName(res.data[i])
+        }
+    }).catch(err=>console.log(err))
+  });
 function onsignup(e){
     e.preventDefault();
     let name=e.target.username.value;
